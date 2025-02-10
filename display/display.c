@@ -13,6 +13,7 @@
 #include "font.h"
 #include "ssd1306.h"
 
+// Pinos usados para Botões, LEDS e Comunicação com o Display
 #define PIN_VERDE 11
 #define PIN_AZUL 12
 #define PIN_WS2812 7
@@ -120,19 +121,19 @@ void button_irq_callback(uint gpio, uint32_t events) {
             temp_button = current_time;
 
             ssd1306_fill(&ssd, false);
-            ssd1306_rect(&ssd, 3, 3, 122, 58, false, true); // Desenha um retângulo
+            ssd1306_rect(&ssd, 3, 3, 122, 58, false, true);
 
             if (gpio == PIN_BUTTON_A) {
                 gpio_put(PIN_VERDE, !gpio_get(PIN_VERDE));
                 char *msg = (gpio_get(PIN_VERDE)) ? "VERDE ON" : "VERDE OFF";
                 printf("%s\n", msg);
-                ssd1306_draw_string(&ssd, msg, 20, 30); // Desenha uma string
+                ssd1306_draw_string(&ssd, msg, 20, 30); // Exibe a msg
             } 
             else if (gpio == PIN_BUTTON_B) {
                 gpio_put(PIN_AZUL, !gpio_get(PIN_AZUL));
                 char *msg = (gpio_get(PIN_AZUL)) ? "AZUL ON" : "AZUL OFF";
                 printf("%s\n", msg);  
-                ssd1306_draw_string(&ssd, msg, 20, 30); // Desenha uma string          
+                ssd1306_draw_string(&ssd, msg, 20, 30); // Exibe a msg         
             }
 
             ssd1306_send_data(&ssd);
